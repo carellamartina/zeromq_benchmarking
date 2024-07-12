@@ -1,31 +1,49 @@
 Benchmarking for ZeroMQ library
 =========
 
-To reproduce the tests you can use a native Ubuntu system or you can use a Docker container. In the following instructions, if you have Ubuntu installed natively, ignore directions for using Docker.
+## Pre-requirements
+To reproduce the tests you have to use Docker containers. 
 
 ## Set up project with Docker
 
-### Create and start a Docker container
+Inside the project directory create and start a docker container:
 
 ```
-docker run -it -v <dir_project_absolute_path>:/zeromq_benchmarking/ --name zeromq_project ros:foxy
+docker run -it -v $(pwd):/zeromq_benchmarking/ --name zeromq_project ros:foxy
 ```
 
-### Install requirements
+> Note: If the container has already been created previously, you can start it using the following command: 
+```
+docker start zeromq_project
+docker exec -it zeromq_project /bin/bash
+```
+
+## Requirements
+Inside the container:
+
+### Install pip:
+```
+sudo apt update
+```
+```
+sudo apt install python3-pip
+```
+
+### Install requirements:
 
 ```
-pip install -r requirements.txt
+pip install -r zeromq_benchmarking/requirements.txt
 ```
 
-### Set up ROS2 workspace
+## Set up ROS2 workspace
 
-Enter in the root folder of the project called 'zeromq_benchmarking'
+Enter in the root folder of the project called 'zeromq_benchmarking':
 
 ```
 cd zeromq_benchmarking
 ```
 
-In the same terminal you can use this doc to set up ROS workspace: [Cheat Sheet RTES Lab Unimore](https://github.com/HiPeRT/F1tenth-RTES/blob/master/Code/ros2/LAB_CHEAT_SHEET.md#cheat-sheet-for-the-lab-exercises-in-ros2)
+In the same terminal, you can use this doc to set up ROS workspace: [Cheat Sheet RTES Lab Unimore](https://github.com/HiPeRT/F1tenth-RTES/blob/master/Code/ros2/LAB_CHEAT_SHEET.md#cheat-sheet-for-the-lab-exercises-in-ros2)
 
 > Note: workspace directory is 'ros2_ws'
 
@@ -58,7 +76,7 @@ source install/setup.bash
 ros2 run cpp_echo client
 ```
 
-### Show result graph
+## Show result graph
 
 Open a new terminal (not inside the container) and execute:
 
@@ -91,7 +109,7 @@ docker exec -ti zeromq_project /bin/bash
 ./zeromq_benchmarking/zeromq/pub-sub/client.py
 ```
 
-### Show results graph
+## Show results graph
 
 Open a new terminal (not inside the container) and execute:
 
