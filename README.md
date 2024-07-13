@@ -58,3 +58,5 @@ L'esperimento è stato costrutito per essere eseguito in un ambiente containeriz
 - Versione di ZeroMQ utilizzata: pyzmq **4.3.2**
 
 All'interno della seguente [guida](start_project.md) è possibile trovare tutti i comandi necessari per replicare l'esperimento.
+
+Per la realizzazione dei grafici è stato usato Gnuplot. Un programma gratuito e interattivo per la creazione di grafici 2D.

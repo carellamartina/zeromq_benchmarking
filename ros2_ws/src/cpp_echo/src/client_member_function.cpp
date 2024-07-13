@@ -14,6 +14,7 @@
 
 #include <chrono>
 #include <memory>
+#include <fstream>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
@@ -62,7 +63,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
   size_t count_;
-  const size_t NUM_MESSAGES = 10;
+  const size_t NUM_MESSAGES = 10000;
 
   rclcpp::Clock *clk_;
   rcl_time_point_value_t start_ns_;
@@ -73,7 +74,11 @@ private:
 
     rcl_time_point_value_t end_ns = clk_->now().nanoseconds();
     RCLCPP_INFO(this->get_logger(), "[__TIME__]: %lld", end_ns - start_ns_);
-    
+
+    std::ofstream file;
+    file.open("time.txt", std::ios_base::app);
+    file << std::to_string(count_) << " " << std::to_string(end_ns - start_ns_) << "\n"; 
+    file.close();
   }
 
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;

@@ -81,7 +81,7 @@ ros2 run cpp_echo client
 Open a new terminal (not inside the container) and execute:
 
 ```
-cd zeromq_benchmarking/ros2_ws/src/cpp_echo/src
+cd zeromq_benchmarking/ros2_ws
 ```
 ```
 docker run --rm -v $(pwd):/work remuslazar/gnuplot graph.gnu

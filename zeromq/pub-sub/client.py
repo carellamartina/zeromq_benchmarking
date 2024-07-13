@@ -21,7 +21,7 @@ try:
 except:
     print("Error during file open")
 
-for i in range(10000):
+for message_index in range(10000):
     message_to_send = "Hello Server!"
     print(str(i) + " - Publishing: " + message_to_send)
     start_time = time.time()
@@ -34,7 +34,7 @@ for i in range(10000):
     print("[TIME]: " + str(timer) + " microseconds")
     print("-------------------------------------")
 
-    file.write(str(i) + " " + str(timer))
+    file.write(str(message_index) + " " + str(timer))
     file.write("\n")
 
 file.close()
