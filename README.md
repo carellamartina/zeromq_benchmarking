@@ -33,6 +33,10 @@ Nel pattern PUB-SUB i nodi si scambiano direttamente dei messaggi.
 Il nodo che fa da publisher, non conosce l'identità dei destinatari, si limita a pubblicare il suo messaggio all'interno di un determinato topic al quale si iscriveranno tutti i nodi subscriber che vorranno ricevere quelle informazioni. 
 E' possibile quindi che ci siano più nodi che pubblicano i messaggi sempre con il vincolo che solo loro potranno inviare messaggi ai vari topic: si ha una comunicazione N-to-N unidirezionale.
 
+In ROS2, per impostazione predefinita, publishers e subscriptions hanno le QoS così impostate:
+- **history**: 'keep last' con una dimensione della coda di 10
+- **reliability**: "reliable" 
+
 ## Benchmarking ZeroMQ vs ROS2
 
 Per confrontare le due librerie e stabilire quale soluzione sia quella con minor latenza durante l'invio/ricezione di messaggi si è scelto di implementare il design pattern precedentemente presentato: Publisher-Subscriber.
@@ -60,12 +64,19 @@ I risultati sono stati ottenuti ripetendo il test inviando i messaggi ogni 10ms,
 - Invio dei messaggi ogni 10ms
 ![10ms](results/result-10ms.png)
 
+Infine è stato eseguito un test utilizzando un profilo unreliable per le QoS. In particolare è stato impostato:
+- **history**: 'keep last' con una dimensione della coda di 0
+- **reliability**: "best-effort" 
+
+![qos](results/ros2-10ms-qos.png)
+
 ## Conclusioni
 
 Dai benchmark effettuati è possibile evincere che:
 - Tendenzialmente ZeroMq risulta avere un RTT quasi minore di ROS2 con l'aumento della dimensione del messaggio inviato.
-- Nella fase iniziale della comunicazione ROS2 sembra avere prestazioni migliori di ZeroMQ, il quale dopo aver instaurato correttamente la connessione, diventa più veloce.
-- ROS2 risulta essere penalizzato probabilemnte a causa dell'overhead applicato sui nodi, essendo esso un framework a differenza di ZeroMQ il quale è una libreria.
+- Nella fase iniziale della comunicazione ROS2 risulta avere prestazioni migliori di ZeroMQ, il quale dopo aver instaurato correttamente la connessione, diventa più veloce.
+- ROS2 risulta essere penalizzato, probabilemnte a causa del carico di lavoro applicato sui nodi, essendo esso un framework e non una libreria come ZeroMQ.
+- La variazione delle QoS non ha portato a una visibile differenza
 
 
 ## Replica dell'esperimento

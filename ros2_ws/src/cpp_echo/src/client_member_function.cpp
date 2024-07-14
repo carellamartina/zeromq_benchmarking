@@ -24,6 +24,19 @@ using std::placeholders::_1;
 
 using namespace std::chrono_literals;
 
+static const rmw_qos_profile_t qos_profile_unreliable =
+{
+    RMW_QOS_POLICY_HISTORY_KEEP_LAST,
+    0, //depth for unreliable
+    RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT,
+    RMW_QOS_POLICY_DURABILITY_VOLATILE,
+    RMW_QOS_DEADLINE_DEFAULT,
+    RMW_QOS_LIFESPAN_DEFAULT,
+    RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT,
+    RMW_QOS_LIVELINESS_LEASE_DURATION_DEFAULT,
+    false // useless
+};
+
 /* This example creates a subclass of Node and uses std::bind() to register a
  * member function as a callback from the timer. */
 
@@ -32,6 +45,8 @@ class Client : public rclcpp::Node
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+  rclcpp::QoS qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(qos_profile));
+
   size_t count_;
   const size_t NUM_MESSAGES = 1500;
   size_t message_size_ = 0;
