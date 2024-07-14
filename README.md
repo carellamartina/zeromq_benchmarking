@@ -53,28 +53,26 @@ Il tempo salvato sarà quindi il ***Round Trip Time*** (RTT), ovvero il tempo im
 ## Risultati
 I risultati sono stati ottenuti ripetendo il test inviando i messaggi ogni 10ms, 25ms e 50ms.
 
-### ROS2
 - Invio dei messaggi ogni 50ms
-![ROS2 50ms](ros2_ws/results/result_50ms%20.png)
+![50ms](results/result-50ms.png)
 - Invio dei messaggi ogni 25ms
-![ROS2 25ms](ros2_ws/results/result_25ms.png)
+![25ms](results/result-25ms.png)
 - Invio dei messaggi ogni 10ms
-![ROS2 10ms](ros2_ws/results/result_10ms.png)
+![10ms](results/result-10ms.png)
 
-### ZeroMQ
-- Invio dei messaggi ogni 50ms
-![ZeroMQ 50ms](zeromq/results/result_50ms.png)
-- Invio dei messaggi ogni 25ms
-![ZeroMQ 25ms](zeromq/results/result_25ms.png)
-- Invio dei messaggi ogni 10ms
-![ZeroMQ 10ms](zeromq/results/result_10ms.png)
+## Conclusioni
+
+Dai benchmark effettuati è possibile evincere che:
+- Tendenzialmente ZeroMq risulta avere un RTT quasi minore di ROS2 con l'aumento della dimensione del messaggio inviato.
+- Nella fase iniziale della comunicazione ROS2 sembra avere prestazioni migliori di ZeroMQ, il quale dopo aver instaurato correttamente la connessione, diventa più veloce.
+- ROS2 risulta essere penalizzato probabilemnte a causa dell'overhead applicato sui nodi, essendo esso un framework a differenza di ZeroMQ il quale è una libreria.
 
 
 ## Replica dell'esperimento
 L'esperimento è stato costrutito per essere eseguito in un ambiente containerizzato attraverso l'utilizzo di Docker.
 - Versione di Docker utilizzata: **26.0.0**
 - Distribuzione di ROS2 utilizzata: **Foxy**
-- Versione di ZeroMQ utilizzata: pyzmq **4.3.2**
+- Versione di ZeroMQ utilizzata: pyzmq **26.0.3**
 
 All'interno della seguente [guida](start_project.md) è possibile trovare tutti i comandi necessari per replicare l'esperimento.
 
