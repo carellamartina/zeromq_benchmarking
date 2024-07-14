@@ -97,7 +97,10 @@ It is necessary one terminal for each node.
 docker exec -ti zeromq_project /bin/bash
 ```
 ```
-./zeromq_benchmarking/zeromq/pub-sub/server.py
+cd zeromq_benchmarking/zeromq/pub-sub
+```
+```
+./server.py
 ```
 
 ### Client node
@@ -106,7 +109,10 @@ docker exec -ti zeromq_project /bin/bash
 docker exec -ti zeromq_project /bin/bash
 ```
 ```
-./zeromq_benchmarking/zeromq/pub-sub/client.py
+cd zeromq_benchmarking/zeromq/pub-sub
+```
+```
+./client.py
 ```
 
 ## Show results graph

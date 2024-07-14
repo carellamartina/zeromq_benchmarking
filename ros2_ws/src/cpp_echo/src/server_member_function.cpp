@@ -20,29 +20,29 @@ using std::placeholders::_1;
 
 class Server : public rclcpp::Node
 {
-public:
-  Server()
-  : Node("server")
-  {
-    publisher_ = this->create_publisher<std_msgs::msg::String>("echo", 10);
-
-    subscription_ = this->create_subscription<std_msgs::msg::String>(
-      "topic", 10, std::bind(&Server::topic_callback, this, _1));
-  }
-
-private:
-  void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
-  {
-    RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
-
-    auto message = std_msgs::msg::String();
-    message.data = msg->data;
-    RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
-    publisher_->publish(message);
-  }
-
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+
+  public:
+    Server()
+    : Node("server")
+    {
+      publisher_ = this->create_publisher<std_msgs::msg::String>("echo", 10);
+
+      subscription_ = this->create_subscription<std_msgs::msg::String>(
+        "topic", 10, std::bind(&Server::topic_callback, this, _1));
+    }
+
+  private:
+    void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
+    {
+      RCLCPP_INFO(this->get_logger(), "I heard a message!");
+
+      auto message = std_msgs::msg::String();
+      message.data = msg->data;
+      RCLCPP_INFO(this->get_logger(), "Response published!");
+      publisher_->publish(message);
+    }
 };
 
 int main(int argc, char * argv[])

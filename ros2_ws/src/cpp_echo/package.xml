@@ -4,7 +4,7 @@
   <name>cpp_echo</name>
   <version>0.0.0</version>
   <description>Examples of echo service using rclcpp</description>
-  <maintainer email="paolo.burgio@gmail.com">Paolo Burgio</maintainer>
+  <maintainer email="test@google.it">test</maintainer>
   <license>GPL v3.0</license>
 
   <depend>rclcpp</depend>

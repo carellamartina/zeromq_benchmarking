@@ -4,7 +4,7 @@ Benchmarking ZeroMQ vs ROS2
 Questo repository tratta la valutazione di [ZeroMQ](https://zeromq.org/) 
 come libreria di messaggistica rispetto a [ROS2](https://www.ros.org).  
 
-Il progetto si pone l'obiettivo di confrontare le due librerie per stabilire quale soluzione sia quella con minor latenza durante l'invio/ricezione di messaggi.
+Il progetto è stato realizzato per il corso di Real Time Embedded System dell'Università di Modena e Reggio Emilia con l'obiettivo di confrontare le due librerie e stabilire quale soluzione sia quella con minor latenza durante l'invio/ricezione di messaggi.
 
 ## ZeroMQ
 ZeroMQ è una libreria di messaggistica asincrona ad alte prestazioni, leggera e semplice da usare. Offre numerosi pattern di messaggistica e ha come punto di forza la possibilità di essere eseguita senza un broker di messaggi dedicato.
@@ -33,7 +33,7 @@ Nel pattern PUB-SUB i nodi si scambiano direttamente dei messaggi.
 Il nodo che fa da publisher, non conosce l'identità dei destinatari, si limita a pubblicare il suo messaggio all'interno di un determinato topic al quale si iscriveranno tutti i nodi subscriber che vorranno ricevere quelle informazioni. 
 E' possibile quindi che ci siano più nodi che pubblicano i messaggi sempre con il vincolo che solo loro potranno inviare messaggi ai vari topic: si ha una comunicazione N-to-N unidirezionale.
 
-### Benchmarking ZeroMQ vs ROS2
+## Benchmarking ZeroMQ vs ROS2
 
 Per confrontare le due librerie e stabilire quale soluzione sia quella con minor latenza durante l'invio/ricezione di messaggi si è scelto di implementare il design pattern precedentemente presentato: Publisher-Subscriber.
 
@@ -41,14 +41,33 @@ Per entrambe le librerie sono stati creati 2 nodi (client e server) e sono stati
 
 ![Schema Comunicazione](img/schema_comunicazione.png)
 
-In entrambi i casi viene eseguito il seguente ciclo per N volte:
-1. Il client **invia** un messaggio al server
+In entrambi i casi viene eseguito il seguente ciclo per 1500 volte:
+1. Il client **invia** un messaggio al server aumentandone la dimensione di 1 KByte ad ogni iterazione
 2. Il client segna il **tempo di invio** del messaggio
 3. Il server, ricevuto il messaggio, invia una **risposta** al client
 4. Il client, ricevuta la risposta, segna il **tempo di ricezione**
 5. Il client infine calcola la differenza dei due tempi e la salva sul file *time.txt*
 
 Il tempo salvato sarà quindi il ***Round Trip Time*** (RTT), ovvero il tempo impiegato tra l'invio di una richiesta e la ricezione della risposta.
+
+## Risultati
+I risultati sono stati ottenuti ripetendo il test inviando i messaggi ogni 10ms, 25ms e 50ms.
+
+### ROS2
+- Invio dei messaggi ogni 50ms
+![ROS2 50ms](ros2_ws/results/result_50ms%20.png)
+- Invio dei messaggi ogni 25ms
+![ROS2 25ms](ros2_ws/results/result_25ms.png)
+- Invio dei messaggi ogni 10ms
+![ROS2 10ms](ros2_ws/results/result_10ms.png)
+
+### ZeroMQ
+- Invio dei messaggi ogni 50ms
+![ZeroMQ 50ms](zeromq/results/result_50ms.png)
+- Invio dei messaggi ogni 25ms
+![ZeroMQ 25ms](zeromq/results/result_25ms.png)
+- Invio dei messaggi ogni 10ms
+![ZeroMQ 10ms](zeromq/results/result_10ms.png)
 
 
 ## Replica dell'esperimento
